@@ -1,23 +1,24 @@
 # cumac
 
-Write a CUDA kernel, run it on macOS via [tinygrad](https://github.com/tinygrad/tinygrad)'s
-NV runtime on an NVIDIA eGPU.
+A small CLI for running CUDA kernels on macOS + NVIDIA eGPU. Based on [tinygrad](https://github.com/tinygrad/tinygrad)'s
+NV runtime for NVIDIA eGPU. 
 
 ## Requirements
 
 - Apple Silicon Mac with an NVIDIA eGPU over Thunderbolt/USB4
-- [TinyGPU.app](https://github.com/tinygrad/tinygpu_releases) installed (tinygrad fetches it on first use)
-- Docker Desktop (for `nvcc`)
+- TinyGPU.app installed (follow the [instructions](https://docs.tinygrad.org/tinygpu/) )
+- Docker
 
 ## Install
 
-```fish
+```bash
 uv sync
+uv tool install --editable .
 ```
 
 ## Usage
 
-```fish
+```bash
 # Run a kernel end-to-end (compile + launch + dump output to NAME.bin)
 cumac run src/cumac/vec_add.cu vec_add \
     out:c:f32:1024 in:a:f32:1024:iota in:b:f32:1024:iota val:n:i32:1024 \
