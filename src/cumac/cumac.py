@@ -8,6 +8,7 @@ cumac — write a .cu kernel, run it on macOS via tinygrad's NV runtime.
 USAGE
     cumac compile FILE.cu [-a sm_86] [-o OUT.cubin]
     cumac run FILE.cu ENTRY ARG... --grid Gx[,Gy,Gz] --block Bx[,By,Bz] [-v]
+    cumac analyze FILE.cu [ENTRY] [--block N] [-a sm_86]
 
 KERNEL CONSTRAINTS
     * Declare with `extern "C"` to avoid C++ name mangling.
@@ -33,8 +34,8 @@ EXAMPLE
         if (i < n) c[i] = a[i] + b[i];
     }
     EOF
-    cumac run vec_add.cu vec_add \
-        out:c:f32:1024 in:a:f32:1024:iota in:b:f32:1024:iota val:n:i32:1024 \
+    cumac run vec_add.cu vec_add \\
+        out:c:f32:1024 in:a:f32:1024:iota in:b:f32:1024:iota val:n:i32:1024 \\
         --grid 4 --block 256
 """
 from __future__ import annotations
