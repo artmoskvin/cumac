@@ -1,7 +1,7 @@
 [project]
 name = "cumac"
 version = "0.1.0"
-description = "Add your description here"
+description = "Write a .cu kernel, run it on macOS via tinygrad's NV runtime"
 readme = "README.md"
 authors = [
     { name = "Art Moskvin", email = "amoskvin@me.com" }
