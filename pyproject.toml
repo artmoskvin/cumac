@@ -21,3 +21,6 @@ build-backend = "uv_build"
 
 [tool.uv.sources]
 tinygrad = { git = "https://github.com/tinygrad/tinygrad", rev = "235044c9d" }
+
+[tool.ruff.lint]
+ignore = ["E701"]
