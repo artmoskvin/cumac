@@ -46,7 +46,8 @@ import numpy as np
 
 # ── dtype table ────────────────────────────────────────────────────────────────
 DTYPES = {
-    "f32": np.float32, "i32": np.int32,  "u32": np.uint32,
+    "f16": np.float16, "f32": np.float32, "f64": np.float64,
+    "i32": np.int32,  "u32": np.uint32,
     "i64": np.int64,   "u64": np.uint64, "i8":  np.int8, "u8": np.uint8,
 }
 
@@ -179,6 +180,11 @@ def run_kernel(cubin: bytes, entry: str, kargs: list[Arg],
 
     # Build the program and launch.
     prog = NVProgram(dev, entry, cubin)
+
+    # tinygrad doesn't put the block/grid dims in cbuf_0, so we do it here.
+    if hasattr(prog, "cbuf_0") and len(prog.cbuf_0) >= 6:
+        prog.cbuf_0[0:6] = [block[0], block[1], block[2], grid[0], grid[1], grid[2]]
+
     if verbose:
         print(f"[run] launching {entry} grid={grid} block={block} "
               f"bufs={len(bufs)} vals={vals}", file=sys.stderr)
